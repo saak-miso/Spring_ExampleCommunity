@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <!-- auto-config="false" : 로그인 폼을 직접 만들어서 사용 -->
+    <security:http auto-config="false">
+
+        <!-- 로그인 페이지와 로그인 처리 URL 설정 -->
+        <security:form-login login-page="/logIn.do" login-processing-url="/authenticationProcess.do" username-parameter="memberId" password-parameter="memberPw" default-target-url="/main.do" always-use-default-target="true"></security:form-login>
+
+        <!-- 로그인 페이지는 접근권한 permitAll() 설정 -->
+        <security:intercept-url pattern="/logIn.do" access="permitAll()"></security:intercept-url>
+
+        <!-- 인증된 사용자에 한해 isAuthenticated() 설정 -->
+        <security:intercept-url pattern="/**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"></security:intercept-url>
+
+        <!-- 로그아웃 설정 -->
+        <!-- logout-url : 로그아웃 처리에 대한 URL. form태그의 action 속성에 지정한 값. -->
+        <!-- logout-success-url : 로그아웃 성공시, 이동할 URL -->
+        <!-- invalidate-session : 로그아웃 시, session을 무효화할 지 선택 -->
+        <!-- delete-cookies : 로그아웃 성공시, 삭제할 쿠키 이름 지정 -->
+        <security:logout logout-url="/logOut.do" logout-success-url="/logIn.do?logout" invalidate-session="true" delete-cookies="JSESSIONID"></security:logout>
+
+        <!-- CSRF 설정 -->
+        <security:csrf disabled="true"></security:csrf>
+
+
+        <!-- CSRF 설정 -->
+        <security:csrf disabled="true"></security:csrf>
+
+        <!-- 이전에 접속한 페이지에서 로그아웃 처리됨 -->
+        <security:session-management>
+            <security:concurrency-control max-sessions="1" expired-url="/login.do?expired=true"></security:concurrency-control>
+        </security:session-management>
+
+    </security:http>
+
+    <security:authentication-manager id="authenticationManager">
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="user" password="{noop}1q2w3e" authorities="ROLE_USER"></security:user>
+                <security:user name="admin" password="{noop}q1w2e3" authorities="ROLE_ADMIN"></security:user>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+</beans>

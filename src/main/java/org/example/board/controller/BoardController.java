@@ -40,7 +40,6 @@ public class BoardController {
         return "board/boardDetail";
     }
 
-
     @RequestMapping(value = "/boardList.do")
     public String boardList(HttpServletRequest request, Model model) throws Exception {
 

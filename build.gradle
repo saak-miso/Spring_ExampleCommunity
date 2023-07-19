@@ -35,6 +35,13 @@ dependencies {
     implementation "org.springframework:spring-webmvc:5.2.22.RELEASE"
     implementation "org.springframework:spring-jdbc:5.2.22.RELEASE"
 
+    // Spring Security
+    implementation "org.springframework.security:spring-security-acl:5.5.0"
+    implementation "org.springframework.security:spring-security-config:5.5.0"
+    implementation "org.springframework.security:spring-security-core:5.5.0"
+    implementation "org.springframework.security:spring-security-taglibs:5.5.0"
+    implementation "org.springframework.security:spring-security-web:5.5.0"
+
     // MariaDB Connect
     implementation "org.mariadb.jdbc:mariadb-java-client:2.5.4"
 
@@ -51,15 +58,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
-
-
-
-
-
-
-
-
-
-
-
