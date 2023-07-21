@@ -49,7 +49,7 @@
 <h3>신규 글 등록</h3>
 <form id="formBoardWrite">
   <!-- 사용자 ID는 임시로 'user'를 고정으로 사용 -->
-  <input type="hidden" name="memberId" value="user"/>
+  <!-- input type="hidden" name="memberId" value="user"/ -->
   <table>
     <tbody>
       <tr>

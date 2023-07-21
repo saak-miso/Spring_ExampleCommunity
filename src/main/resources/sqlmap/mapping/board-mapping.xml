@@ -15,6 +15,9 @@
         <if test="seq!=null and !seq.equals('')">
             AND seq = #{seq}
         </if>
+        <if test="memberId!=null and !memberId.equals('')">
+            AND member_id = #{memberId}
+        </if>
     </select>
 
     <select id="selectCountBoard" resultType="int">
