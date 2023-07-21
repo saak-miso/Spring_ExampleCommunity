@@ -4,8 +4,6 @@ import org.example.board.service.BoardService;
 import org.example.board.service.BoardVO;
 import org.example.utility.OutputPagination;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +23,6 @@ public class BoardController {
     @Resource(name="boardService")
     private BoardService boardService;
 
-    // 현재 인증된 사용자 정보를 가져옵니다.
-
-
     @RequestMapping(value = "/boardDetail.do", method = RequestMethod.GET)
     public String boardDetail(HttpServletRequest request, Model model) throws Exception {
 
@@ -38,10 +33,7 @@ public class BoardController {
             detailBoardVO.setSeq(Integer.parseInt(request.getParameter("seq")));
             BoardVO responseBoardVO = boardService.selectBoard(detailBoardVO);
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String memberId = authentication.getName();
-            model.addAttribute("memberId", memberId);
-            model.addAttribute("writeId", responseBoardVO.getMemberId());
+            model.addAttribute("memberId", responseBoardVO.getMemberId());
             model.addAttribute("boardTitle", responseBoardVO.getBoardTitle());
             model.addAttribute("boardContent", responseBoardVO.getBoardContent());
             model.addAttribute("boardDate", responseBoardVO.getBoardDate());
@@ -80,34 +72,17 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/boardRevise.do", method = RequestMethod.GET)
-    public String boardEdit(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // 현재 인증된 사용자 정보를 가져옵니다.
-        String memberId = authentication.getName(); // 여기서 getName()은 주로 사용자의 식별자 (ID)를 반환합니다.
+    public String boardEdit(HttpServletRequest request, Model model) throws Exception {
 
         BoardVO editBoardVO = new BoardVO();
         editBoardVO.setSeq(Integer.parseInt(request.getParameter("seq")));
-        editBoardVO.setMemberId(memberId);
 
         BoardVO responseBoardVO = boardService.selectBoard(editBoardVO);
-
-        if(responseBoardVO == null) {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html;charset=utf-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script type='text/javascript'>");
-            out.println("alert('해당 포스팅을 수정할 권한을 가지고 있지 않습니다.');");
-            out.println("window.location.href='./boardList.do';");
-            out.println("</script>");
-            out.flush();
-        } else {
-            model.addAttribute("seq", request.getParameter("seq"));
-            model.addAttribute("memberId", responseBoardVO.getMemberId());
-            model.addAttribute("boardTitle", responseBoardVO.getBoardTitle());
-            model.addAttribute("boardContent", responseBoardVO.getBoardContent());
-            model.addAttribute("boardDate", responseBoardVO.getBoardDate());
-        }
+        model.addAttribute("seq", request.getParameter("seq"));
+        model.addAttribute("memberId", responseBoardVO.getMemberId());
+        model.addAttribute("boardTitle", responseBoardVO.getBoardTitle());
+        model.addAttribute("boardContent", responseBoardVO.getBoardContent());
+        model.addAttribute("boardDate", responseBoardVO.getBoardDate());
 
         return "board/boardRevise";
     }
@@ -118,14 +93,9 @@ public class BoardController {
 
         BoardVO boardVO = new BoardVO();
 
-        // if(request.getParameter("memberId").isEmpty() == false) {
-        //    boardVO.setMemberId(request.getParameter("memberId"));
-        // }
-
-        // 사용자 ID를 가져옵니다.
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String memberId = authentication.getName(); // 여기서 getName()은 주로 사용자의 식별자 (ID)를 반환합니다.
-        boardVO.setMemberId(memberId);
+        if(request.getParameter("memberId").isEmpty() == false) {
+            boardVO.setMemberId(request.getParameter("memberId"));
+        }
 
         if(request.getParameter("boardTitle").isEmpty() == false) {
             boardVO.setBoardTitle(request.getParameter("boardTitle"));
@@ -163,14 +133,9 @@ public class BoardController {
             boardVO.setSeq(Integer.parseInt(request.getParameter("seq")));
         }
 
-        // if(request.getParameter("memberId").isEmpty() == false) {
-        //    boardVO.setMemberId(request.getParameter("memberId"));
-        // }
-
-        // 사용자 ID를 가져옵니다.
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String memberId = authentication.getName(); // 여기서 getName()은 주로 사용자의 식별자 (ID)를 반환합니다.
-        boardVO.setMemberId(memberId);
+        if(request.getParameter("memberId").isEmpty() == false) {
+            boardVO.setMemberId(request.getParameter("memberId"));
+        }
 
         if(request.getParameter("boardTitle").isEmpty() == false) {
             boardVO.setBoardTitle(request.getParameter("boardTitle"));

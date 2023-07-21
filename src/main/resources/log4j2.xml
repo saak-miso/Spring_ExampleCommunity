@@ -10,8 +10,8 @@
 
         <!-- 파일  -->
         <RollingFile name="RollingFile">
-            <FileName>logs/example.log</FileName>
-            <FilePattern>logs/%d{yyyy-MM-dd}_example.log</FilePattern>
+            <FileName>/logs/example.log</FileName>
+            <FilePattern>/logs/%d{yyyy-MM-dd}_example.log</FilePattern>
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Pattern>
             </PatternLayout>
@@ -22,8 +22,8 @@
         </RollingFile>
 
         <RollingFile name="RollingFileError">
-            <FileName>logs/example_error.log</FileName>
-            <FilePattern>logs/%d{yyyy-MM-dd}_example_error.log</FilePattern>
+            <FileName>/logs/example_error.log</FileName>
+            <FilePattern>/logs/%d{yyyy-MM-dd}_example_error.log</FilePattern>
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Pattern>
             </PatternLayout>

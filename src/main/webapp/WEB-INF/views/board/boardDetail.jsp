@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
   <title>${boardTitle}</title>
@@ -48,7 +47,7 @@
   </tr>
   <tr>
     <th>작성자</th>
-    <td>${writeId}</td>
+    <td>${memberId}</td>
   </tr>
   <tr>
     <th>작성일</th>
@@ -64,9 +63,7 @@
     <td colspan="2">
       <button type="button" id="btnList">리스트</button>
       <button type="button" id="btnErase">글삭제</button>
-      <c:if test="${memberId eq writeId}">
-        <button type="button" id="btnRevise">글수정</button>
-      </c:if>
+      <button type="button" id="btnRevise">글수정</button>
     </td>
   </tr>
   </tfoot>
