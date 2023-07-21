@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 
+
 @Controller
 @RequestMapping("/board")
 public class BoardController {
@@ -65,7 +66,6 @@ public class BoardController {
 
         return "board/boardList";
     }
-
     @RequestMapping(value = "/boardWrite.do")
     public String boardWrite() throws Exception {
         return "board/boardWrite";

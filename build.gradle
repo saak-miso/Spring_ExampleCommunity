@@ -42,6 +42,14 @@ dependencies {
     implementation "org.springframework.security:spring-security-taglibs:5.5.0"
     implementation "org.springframework.security:spring-security-web:5.5.0"
 
+    // log4j
+    implementation "org.apache.logging.log4j:log4j-api:2.14.1"
+    implementation "org.apache.logging.log4j:log4j-core:2.14.1"
+    implementation "org.apache.logging.log4j:log4j-slf4j-impl:2.14.1"
+
+    // slf4j
+    implementation "org.slf4j:slf4j-api:1.7.25"
+
     // MariaDB Connect
     implementation "org.mariadb.jdbc:mariadb-java-client:2.5.4"
 
