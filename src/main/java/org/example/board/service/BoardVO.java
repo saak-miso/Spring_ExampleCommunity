@@ -7,7 +7,7 @@ import java.util.Date;
 public class BoardVO {
 
     private int seq;
-    private String memberId;
+    private String writeId;
     private String boardTitle;
     private String boardContent;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -21,12 +21,12 @@ public class BoardVO {
         this.seq = seq;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getWriteId() {
+        return writeId;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setWriteId(String writeId) {
+        this.writeId = writeId;
     }
 
     public String getBoardTitle() {
@@ -57,7 +57,7 @@ public class BoardVO {
     public String toString() {
         return "BoardVO {"
             + "seq=\'" + seq + "\'"
-            + ", memberId=\''" + memberId + "\'"
+            + ", writeId=\''" + writeId + "\'"
             + ", boardTitle=\''" + boardTitle + "\'"
             + ", boardContent=\''" + boardContent + "\'"
             + ", boardDate=\'" + boardDate + "\'"

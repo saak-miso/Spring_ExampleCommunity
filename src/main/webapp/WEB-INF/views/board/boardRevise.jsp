@@ -44,7 +44,7 @@
         <tr>
             <th>ID</th>
             <td>
-                <input type="text" class="fakeDisabled" name="memberId" value="${memberId}" readonly/>
+                <input type="text" class="fakeDisabled" name="writeId" value="${writeId}" readonly/>
             </td>
         </tr>
         <tr>

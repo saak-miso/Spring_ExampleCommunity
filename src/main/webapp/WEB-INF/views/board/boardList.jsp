@@ -21,7 +21,7 @@
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("btnWrite").addEventListener("click", function() {
-            window.location.href = "./board/boardWrite.do";
+            window.location.href = "/board/boardWrite.do";
         });
 
         document.getElementsByClassName("")
@@ -47,7 +47,7 @@
         <tr onClick="window.location.href='/board/boardDetail.do?seq=${board.seq}'">
             <td>${board.seq}</td>
             <td>${board.boardTitle}</td>
-            <td>${board.memberId}</td>
+            <td>${board.writeId}</td>
             <td><fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
         </tr>
     </c:forEach>
@@ -64,6 +64,3 @@
     ${boardPagination}
 </body>
 </html>
-
-
-

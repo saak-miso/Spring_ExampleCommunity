@@ -33,7 +33,7 @@ public class BoardController {
             detailBoardVO.setSeq(Integer.parseInt(request.getParameter("seq")));
             BoardVO responseBoardVO = boardService.selectBoard(detailBoardVO);
 
-            model.addAttribute("memberId", responseBoardVO.getMemberId());
+            model.addAttribute("writeId", responseBoardVO.getWriteId());
             model.addAttribute("boardTitle", responseBoardVO.getBoardTitle());
             model.addAttribute("boardContent", responseBoardVO.getBoardContent());
             model.addAttribute("boardDate", responseBoardVO.getBoardDate());
@@ -79,7 +79,7 @@ public class BoardController {
 
         BoardVO responseBoardVO = boardService.selectBoard(editBoardVO);
         model.addAttribute("seq", request.getParameter("seq"));
-        model.addAttribute("memberId", responseBoardVO.getMemberId());
+        model.addAttribute("writeId", responseBoardVO.getWriteId());
         model.addAttribute("boardTitle", responseBoardVO.getBoardTitle());
         model.addAttribute("boardContent", responseBoardVO.getBoardContent());
         model.addAttribute("boardDate", responseBoardVO.getBoardDate());
@@ -93,8 +93,8 @@ public class BoardController {
 
         BoardVO boardVO = new BoardVO();
 
-        if(request.getParameter("memberId").isEmpty() == false) {
-            boardVO.setMemberId(request.getParameter("memberId"));
+        if(request.getParameter("writeId").isEmpty() == false) {
+            boardVO.setWriteId(request.getParameter("writeId"));
         }
 
         if(request.getParameter("boardTitle").isEmpty() == false) {
@@ -133,8 +133,8 @@ public class BoardController {
             boardVO.setSeq(Integer.parseInt(request.getParameter("seq")));
         }
 
-        if(request.getParameter("memberId").isEmpty() == false) {
-            boardVO.setMemberId(request.getParameter("memberId"));
+        if(request.getParameter("writeId").isEmpty() == false) {
+            boardVO.setWriteId(request.getParameter("writeId"));
         }
 
         if(request.getParameter("boardTitle").isEmpty() == false) {
