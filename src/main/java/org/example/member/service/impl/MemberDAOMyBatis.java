@@ -1,6 +1,5 @@
 package org.example.member.service.impl;
 
-import org.example.board.service.impl.BoardDAOMyBatis;
 import org.example.member.service.AuthorityVO;
 import org.example.member.service.MemberDAO;
 import org.example.member.service.MemberVO;

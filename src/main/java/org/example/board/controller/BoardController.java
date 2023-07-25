@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 
-
 @Controller
 @RequestMapping("/board")
 public class BoardController {

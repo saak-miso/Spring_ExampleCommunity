@@ -8,36 +8,46 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <!-- permitAll() : 인증여부와 상관없이 모든 사용자가 접근 -->
+    <!-- auto-config="false" : 로그인 폼을 직접 만들어서 사용 -->
     <security:http auto-config="false">
 
         <!-- 로그인 페이지와 로그인 처리 URL 설정 -->
-        <security:form-login login-page="/logIn.do" login-processing-url="/authenticationProcess.do" username-parameter="memberId" password-parameter="memberPw"></security:form-login>
+        <!--security:form-login login-page="/login.do" login-processing-url="/authenticationProcess.do" username-parameter="memberId" password-parameter="memberPw" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-handler-ref="authenticationFailureHandler"></security:form-login -->
 
         <!-- 로그인 페이지는 접근권한 permitAll() 설정 -->
-        <security:intercept-url pattern="/logIn.do" access="permitAll()"></security:intercept-url>
+        <!-- security:intercept-url pattern="/login.do" access="permitAll()"></security:intercept-url -->
 
         <!-- 회원가입 페이지는 접근권한 permitAll() 설정 -->
-        <security:intercept-url pattern="/singUp.do" access="permitAll()"></security:intercept-url>
+        <!-- security:intercept-url pattern="/singUp.do" access="permitAll()"></security:intercept-url -->
 
         <!-- 회원가입시 회원 신청 ID 중복 확인 프로세스 접근권한 permitAll() 설정 -->
-        <security:intercept-url pattern="/duplicateId.do" access="permitAll()"></security:intercept-url>
+        <!-- security:intercept-url pattern="/duplicateId.do" access="permitAll()"></security:intercept-url -->
 
         <!-- 회원가입 로직처리 프로세스 접근권한 permitAll() 설정 -->
-        <security:intercept-url pattern="/memberRegistry.do" access="permitAll()"></security:intercept-url>
+        <!-- security:intercept-url pattern="/memberRegistry.do" access="permitAll()"></security:intercept-url -->
 
         <!-- 로그인 인증된 사용자에 한해 isAuthenticated() 설정 -->
-        <security:intercept-url pattern="/**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"></security:intercept-url>
+        <!-- security:intercept-url pattern="/**" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')"></security:intercept-url -->
 
         <!-- 로그아웃 설정 -->
-        <security:logout logout-url="/logOut.do" logout-success-url="/logIn.do?logout" invalidate-session="true" delete-cookies="JSESSIONID"></security:logout>
+        <!-- security:logout logout-url="/logout.do" logout-success-url="/login.do?logout" invalidate-session="true" delete-cookies="JSESSIONID"></security:logout -->
+
+        <!-- API 로그인 설정 -->
+        <security:form-login login-processing-url="/api/authenticationProcess.do" username-parameter="memberId" password-parameter="memberPw" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-handler-ref="authenticationFailureHandler"></security:form-login>
+
+        <!-- 토큰 유효성 검사를 수행할 URL 패턴 설정 -->
+        <security:intercept-url pattern="/api/**" access="isAuthenticated()"></security:intercept-url>
 
         <!-- CSRF 설정 -->
         <security:csrf disabled="true"></security:csrf>
 
         <!-- 이전에 접속한 페이지에서 로그아웃 처리됨 -->
         <security:session-management>
-            <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true" expired-url="/logIn.do?expired=true"></security:concurrency-control>
+            <security:concurrency-control max-sessions="1" expired-url="/login.do?expired=true"></security:concurrency-control>
         </security:session-management>
+
+        <!-- JwtTokenFilter를 추가하여 토큰 유효성 검사 수행 -->
+        <security:custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="jwtTokenProvider"></security:custom-filter>
 
     </security:http>
 
@@ -50,5 +60,21 @@
 
     <bean id="securityUserDetailsService" class="org.example.security.SecurityUserDetailsService"></bean>
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+
+    <!-- jwtConfig bean -->
+    <bean id="jwtConfig" class="org.example.security.JwtConfig"></bean>
+
+    <!-- JWT 토큰 생성 및 유효성 검사 bean -->
+    <bean id="jwtTokenProvider" class="org.example.security.JwtTokenProvider">
+        <constructor-arg ref="jwtConfig"></constructor-arg>
+    </bean>
+
+    <!-- 인증 성공 bean -->
+    <bean id="authenticationSuccessHandler" class="org.example.security.SecurityAuthenticationSuccessHandler">
+        <constructor-arg ref="jwtTokenProvider"></constructor-arg>
+    </bean>
+
+    <!-- 인증 실패 bean -->
+    <bean id="authenticationFailureHandler" class="org.example.security.SecurityAuthenticationFailureHandler"></bean>
 
 </beans>
