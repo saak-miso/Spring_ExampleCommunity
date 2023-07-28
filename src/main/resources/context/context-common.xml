@@ -4,12 +4,22 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- 스웨거 빈 등록 -->
+    <bean id="swaggerConfig" class="org.example.config.SwaggerConfig"></bean>
+
     <!-- @Service, @Repository만 include -->
+    <!-- Controller는 자동 스캔에 포함시키지 않는다. -->
+    <!--
     <context:component-scan base-package="org.example.*.*" use-default-filters="true">
-        <!-- Controller는 자동 스캔에 포함시키지 않는다. -->
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+    </context:component-scan>
+    -->
+
+    <!-- @Service, @Repository, @Controller 모두 스캔 -->
+    <context:component-scan base-package="org.example.*.*" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"></context:include-filter>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"></context:include-filter>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>
     </context:component-scan>
 
 </beans>
-
-

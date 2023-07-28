@@ -35,6 +35,12 @@
         <!-- API 로그인 설정 -->
         <security:form-login login-processing-url="/api/authenticationProcess.do" username-parameter="memberId" password-parameter="memberPw" authentication-success-handler-ref="authenticationSuccessHandler" authentication-failure-handler-ref="authenticationFailureHandler"></security:form-login>
 
+
+        <security:intercept-url pattern="/swagger-ui.html" access="permitAll()"></security:intercept-url>
+        <security:intercept-url pattern="/swagger-resources/**" access="permitAll()"></security:intercept-url>
+        <security:intercept-url pattern="/v2/api-docs" access="permitAll()"></security:intercept-url>
+        <security:intercept-url pattern="/webjars/**" access="permitAll()"></security:intercept-url>
+
         <!-- 토큰 유효성 검사를 수행할 URL 패턴 설정 -->
         <security:intercept-url pattern="/api/**" access="isAuthenticated()"></security:intercept-url>
 
