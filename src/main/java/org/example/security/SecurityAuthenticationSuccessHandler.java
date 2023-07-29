@@ -22,6 +22,7 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 
         String token = jwtTokenProvider.generateToken(authentication);
+        token = String.format("Bearer %s",token);
 
         // 인증 성공 시 처리할 로직을 구현합니다.
         Map<String, Object> responseBody = new HashMap<>();
@@ -30,7 +31,7 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
         responseBody.put("token", token);
 
         // JWT 토큰을 Response Header에 설정
-        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader("Authorization", token);
 
         // JSON 형태로 응답을 반환합니다.
         response.setContentType("application/json");

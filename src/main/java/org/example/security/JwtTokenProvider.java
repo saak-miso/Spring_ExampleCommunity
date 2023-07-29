@@ -85,8 +85,8 @@ public class JwtTokenProvider extends OncePerRequestFilter {
     // 특정 URL에 대해 인증 처리를 건너뛰기 위한 로직 구현
     private boolean isSkipAuthentication(String requestUri) {
         
-        // /api인 경우만 인증 토큰 인증 필요
-        List<String> skipUrls = Arrays.asList("/api/");
+        // api인 경우만 인증 토큰 인증 필요
+        List<String> skipUrls = Arrays.asList("/swagger/");
         return skipUrls.stream().anyMatch(requestUri::startsWith);
     }
 

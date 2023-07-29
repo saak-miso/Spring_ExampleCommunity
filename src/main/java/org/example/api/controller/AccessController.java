@@ -1,5 +1,4 @@
 package org.example.api.controller;
-
 import io.swagger.annotations.*;
 import org.example.member.service.MemberService;
 
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
-@Api(tags = "Rest API 샘플")
-public class ApiController {
+@RequestMapping("/access")
+@Api(tags = "01. 사용자 접속 RestAPI 서비스")
+public class AccessController {
 
     @Resource(name="memberService")
     private MemberService memberService;
@@ -34,28 +34,14 @@ public class ApiController {
     @Qualifier("authenticationManager")
     private AuthenticationManager authenticationManager;
 
-    @ApiOperation(value="API 작업의 제목", notes="API 작업에 대한 설명", tags="sample", hidden=false)
-    @ApiResponses(value = {
-            @ApiResponse(code=200, message="Success")
-            , @ApiResponse(code=400, message="Bad Request")
-            , @ApiResponse(code=404, message="Not Found")
-            , @ApiResponse(code=500, message="Internal Server Error")
-    })
-    @RequestMapping(value="/swaggerSample/id/{userId}/name/{userName}", method=RequestMethod.POST)
-    public String swaggerSample(
-          @ApiParam(name="사용자 아이디", value="saakmiso", required=true) @PathVariable("userId") String userId
-        , @ApiParam(name="사용자 이름", value="사악미소", required=false) @PathVariable("userId") String userName
-    ) {
-        String returnMessage = String.format("사용자 ID : %s, 사용자 이름 : %s", userId, userName);
-        return returnMessage;
-    }
 
-    @ResponseBody
     @RequestMapping(value="/authenticationProcess.do", method=RequestMethod.POST)
-    public void authenticate(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-
-        String memberId = request.getParameter("memberId");
-        String memberPw = request.getParameter("memberPw");
+    @ApiOperation(value="회원 인증 처리", notes="회원 인증을 수행합니다.")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="memberId", value="회원 아이디", required=true, dataTypeClass=String.class, paramType="query"),
+        @ApiImplicitParam(name="memberPw", value="회원 비밀번호", required=true, dataTypeClass=String.class, paramType="query")
+    })
+    public void authenticate(@RequestParam String memberId, @RequestParam String memberPw, @ApiIgnore RedirectAttributes redirectAttributes) {
 
         try {
 
