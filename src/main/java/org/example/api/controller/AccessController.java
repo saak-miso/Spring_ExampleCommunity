@@ -61,7 +61,7 @@ public class AccessController {
 
 
     @RequestMapping(value="/jwtTokenValidation.do", method = RequestMethod.POST)
-    public void jwtTokenValidation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void jwtTokenValidation(HttpServletResponse response) throws Exception {
 
         Map<String, Object> responseBody = new HashMap<>();
 
