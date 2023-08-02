@@ -57,6 +57,8 @@
 
     </security:http>
 
+
+
     <!-- Spring Security의 사용자 인증을 수행 -->
     <security:authentication-manager id="authenticationManager">
         <security:authentication-provider user-service-ref="securityUserDetailsService">

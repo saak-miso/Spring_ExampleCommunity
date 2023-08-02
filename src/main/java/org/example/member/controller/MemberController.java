@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+@ApiIgnore  // 스웨거UI에서 숨김 처리
 public class MemberController {
-
     @Resource(name="memberService")
     private MemberService memberService;
 

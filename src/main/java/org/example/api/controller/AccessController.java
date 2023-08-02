@@ -61,6 +61,7 @@ public class AccessController {
 
 
     @RequestMapping(value="/jwtTokenValidation.do", method = RequestMethod.POST)
+    @ApiOperation(value="JWT 유효성 검사", notes="JWT 토큰 사용가능 유무 검사")
     public void jwtTokenValidation(HttpServletResponse response) throws Exception {
 
         Map<String, Object> responseBody = new HashMap<>();

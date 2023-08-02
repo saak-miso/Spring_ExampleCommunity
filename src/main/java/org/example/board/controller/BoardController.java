@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import java.text.SimpleDateFormat;
 
 @Controller
 @RequestMapping("/board")
+@ApiIgnore  // 스웨거UI에서 숨김 처리
 public class BoardController {
     @Resource(name="boardService")
     private BoardService boardService;
